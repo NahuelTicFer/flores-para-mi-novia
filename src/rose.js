@@ -44,14 +44,12 @@ const clean = s => (s || '').replace(/[<>]/g, '').replace(/\s+/g, ' ').trim().sl
 const toName = clean(params.get('to'));
 const fromName = clean(params.get('from'));
 
-/* ---- word-by-word headline ---- */
+/* ---- word-by-word headline — personalizado en español ---- */
 const line = document.getElementById('line');
 const words = toName
   ? [ {t:toName + ','}, {br:true},
-      {t:'someone,'}, {t:'probably,'}, {br:true},
-      {t:'admires', cls:'accent'}, {t:'you.'} ]
-  : [ {t:'Someone,'}, {t:'probably,'}, {br:true},
-      {t:'admires', cls:'accent'}, {t:'you.'} ];
+      {t:'estas'}, {t:'flores'}, {t:'son'}, {t:'para'}, {t:'ti.', cls:'accent'} ]
+  : [ {t:'Estas'}, {t:'flores'}, {t:'son'}, {t:'para'}, {t:'ti.', cls:'accent'} ];
 
 let wi = 0;
 words.forEach(w => {

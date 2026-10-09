@@ -16,12 +16,15 @@ html, body { height:100%; }
 
 body {
   min-height:100vh;
+  min-height:100dvh;
   display:flex;
   flex-direction:column;
   align-items:center;
-  justify-content:center;
-  gap:clamp(1.6rem, 5vh, 3.4rem);
-  overflow:hidden;
+  justify-content:flex-start;
+  gap:clamp(1.2rem, 3.5vh, 2.4rem);
+  overflow-x:hidden;
+  overflow-y:auto;
+  padding:clamp(1.2rem, 4vh, 2.5rem) clamp(1rem, 3vw, 2rem) clamp(2rem, 5vh, 3rem);
   background:
     radial-gradient(150% 125% at 50% -12%, #3c0e24 0%, var(--bg-1) 40%, var(--bg-0) 80%);
   font-family:'Cormorant Garamond', Georgia, serif;
@@ -29,6 +32,7 @@ body {
   cursor:none;
   position:relative;
   perspective:1300px;
+  -webkit-overflow-scrolling:touch;
 }
 
 /* warm halo behind the rose */
@@ -245,7 +249,42 @@ body::before {
 }
 
 /* ---------- TEXT ---------- */
-.copy { position:relative; z-index:2; text-align:center; }
+.copy { position:relative; z-index:2; text-align:center; width:100%; max-width:720px; display:flex; flex-direction:column; align-items:center; gap:.4rem; }
+
+/* Tarjeta romántica — mensaje principal en español */
+.romantic-card {
+  margin-top:clamp(.8rem, 2vh, 1.2rem);
+  width:100%;
+  max-width:640px;
+  padding:clamp(1.2rem, 3.5vw, 2rem) clamp(1.1rem, 3.5vw, 1.9rem);
+  background:linear-gradient(165deg, rgba(44,10,28,0.62), rgba(20,5,14,0.58));
+  border:1px solid rgba(233,205,146,0.16);
+  border-radius:20px;
+  box-shadow:0 20px 60px -20px rgba(0,0,0,0.75), inset 0 1px 0 rgba(255,255,255,0.04);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  text-align:center;
+  opacity:0;
+  animation:rise 1.4s cubic-bezier(.2,.8,.2,1) 2.9s forwards;
+}
+.romantic-card__title {
+  font-size:clamp(1.45rem, 4.2vw, 2.05rem);
+  font-weight:600;
+  font-style:italic;
+  line-height:1.2;
+  color:var(--gold);
+  margin-bottom:.75rem;
+  text-shadow:0 2px 20px rgba(255,120,150,0.18);
+}
+.romantic-card__text {
+  font-size:clamp(1rem, 2.9vw, 1.18rem);
+  line-height:1.65;
+  color:var(--ink);
+  font-style:italic;
+  font-weight:400;
+  margin-bottom:.65rem;
+}
+.romantic-card__text:last-child { margin-bottom:0; }
 .copy__label {
   display:block;
   font-size:clamp(.62rem, 1.4vw, .78rem);
@@ -333,7 +372,39 @@ body::before {
   100% { opacity:0; transform:translateY(-112vh) translateX(var(--dx)); }
 }
 
-@media (max-width:560px){ .dew { display:none; } }
+/* ---- responsive ---- */
+@media (max-width:768px){
+  body {
+    justify-content:flex-start;
+    gap:1rem;
+    padding:1rem 1rem 2rem;
+    cursor:auto;
+  }
+  .scene { transform:scale(.92); margin-top:.2rem; }
+  .copy__label { font-size:.62rem; letter-spacing:.42em; margin-bottom:.6rem; }
+  .copy__label::before, .copy__label::after { width:18px; }
+  .romantic-card { padding:1.1rem 1rem; border-radius:16px; }
+  .cursor-glow, .cursor-dot { display:none !important; }
+}
+@media (max-width:560px){
+  .dew { display:none; }
+  .rose { width:clamp(200px, 68vw, 300px); }
+  .stem { margin-top:-6px; }
+  .rose-shadow { width:clamp(130px, 45vw, 200px); height:22px; }
+  .copy__line { font-size:clamp(1.65rem, 7vw, 2.4rem); }
+  .hint { font-size:.6rem; letter-spacing:.22em; }
+}
+@media (max-width:380px){
+  .rose { width:clamp(180px, 72vw, 260px); }
+  .romantic-card__title { font-size:1.3rem; }
+  .romantic-card__text { font-size:.96rem; }
+}
+
+/* touch devices: no custom cursor */
+@media (pointer: coarse) {
+  body { cursor:auto; }
+  .cursor-glow, .cursor-dot { display:none !important; }
+}
 
 @media (prefers-reduced-motion: reduce) {
   .rose, .rose__spin, .ambient, .rose__core, .rose-shadow, .fp, .dust,
